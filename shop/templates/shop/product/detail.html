@@ -1,0 +1,28 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}
+    {% if product %}{{ product.category }}{% else %}Product{% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="product-detail row text-left">
+        <div class="col-lg-6" style="margin-top: 10px;">
+            <img class="img-responsive" src={% if product.image %}{{ product.image.url }}{% else %}https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1234473017,3789785852&fm=27&gp=0.jpg{% endif %}>
+        </div>
+        <div class="col-lg-6">
+            <h4>物品名称：{{ product.name }}</h4>
+            <h5><a href="{{ product.categor.get_absolute_url }}">商品类别：{{ product.category }}</a> </h5>
+            <p class="price h5 text-muted">惊爆价：<em class="f-34" style="color: #e4393c;font-style: normal;"><span class="f-bold f-18">￥</span>{{ product.price }}</em></p>
+            <form class="form-group jd-form-input" action="{% url "cart:cart_add" product.id %}" method="post">
+                {{ cart_product_form }}
+                {% csrf_token %}
+                <input type="submit" class="btn-jd" value="加入购物车" />
+            </form>
+            <div class="alert alert-danger" role="alert">
+                <p>商品描述：</p>
+                <div class="text-muted fuck">{{ product.description|linebreaks }}</div>
+            </div>
+            <p class="text-muted">温馨提示: 不支持7天无理由退货</p>
+        </div>
+    </div>
+{% endblock %}

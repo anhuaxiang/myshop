@@ -1,0 +1,63 @@
+{% extends "shop/base.html" %}
+
+{% block title %}
+Checkout
+{% endblock %}
+
+{% block content %}
+    <h1>Checkout</h1>
+    <div class="order-info">
+        <h3>Your order</h3>
+        <ul>
+            {% for item in cart %}
+                <li>
+                    {{ item.quantity }} * {{ item.product.name }}
+                    <span>${{ item.total_price }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+        <p> Total:${{ cart.get_total_price }}</p>
+    </div>
+    <form action="." method="post" class="order-form">
+        {{ form.as_p }}
+        <div class="row">
+            <div class="form-group col-lg-4">
+                <label for="exampleInputEmail1">姓</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="姓">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-4">
+                <label for="exampleInputEmail1">名</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="名">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-4">
+                <label for="exampleInputEmail1">地址</label>
+                <input type="text" class="form-control" id="address" name="address" placeholder="地址">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-4">
+                <label for="exampleInputEmail1">邮编</label>
+                <input type="number" class="form-control" id="postal_code" name="postal_code" placeholder="邮编">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-4">
+                <label for="exampleInputEmail1">城市</label>
+                <input type="text" class="form-control" id="city" name="city" placeholder="城市">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-4">
+                <label for="exampleInputEmail1">邮箱</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="邮箱">
+            </div>
+        </div>
+        <p><input type="submit" value="提交订单"></p>
+        {% csrf_token %}
+
+    </form>
+{% endblock %}

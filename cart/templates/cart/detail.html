@@ -1,0 +1,43 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}
+    Your shopping cart
+{% endblock %}
+
+{% block content %}
+    <h3>购物车列表</h3>
+    {% for item in cart %}
+        <div class="panel panel-info row">
+            {% with product=item.product %}
+                <div class="col-lg-3">
+                    <a class="thumbnail" style="margin: 10px 0;" href="{{ product.get_absolute_url }}">
+                        <img height="180" src="{% if product.image %}{{ product.image.url }}{% else %}https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1234473017,3789785852&fm=27&gp=0.jpg{% endif %}">
+                    </a>
+                </div>
+                <div class="col-lg-8 m-t-10">
+                    <div class="text-muted  m-t-10">商品名称：{{ product.name }}</div>
+                    <form class="jd-form-input  m-t-10" action="{% url "cart:cart_add" product.id %}" method="post">
+                        <label class="text-muted"  style="font-weight: bold;" for="id_quantity">商品数量:</label>
+                        {{ item.update_quantity_form.quantity }}
+                        {{ item.update_quantity_form.update }}
+                        <input type="submit" class="btn-jd" value="修改数量">
+                        {% csrf_token %}
+                    </form>
+                    <div class="row">
+                        <div class="text-muted col-lg-12  m-t-10">当前商品单价：￥{{ item.price }}</div>
+                        <div class="text-muted col-lg-8   m-t-10">当前商品总价：￥{{ item.total_price }}</div>
+                        <a class="text-muted col-lg-4" style="text-align: right;" href="{% url "cart:cart_remove" product.id%}"><button type="button" class="btn btn-danger">清空</button></a>
+                    </div>
+                </div>
+            {% endwith %}
+        </div>
+    {% endfor %}
+    <div class="row">
+        <span class="col-lg-6">总计：<span class="text-danger">￥{{ cart.get_total_price }}</span></span>
+        <p class="text-right col-lg-6">
+            <a href="{% url "shop:product_list" %}" class="btn btn-primary">继续购物</a>
+            <a href="{% url "order:order_create" %}" class="btn btn-info">提交订单</a>
+        </p>
+    </div>
+{% endblock %}

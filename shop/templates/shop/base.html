@@ -1,0 +1,163 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} My shop{% endblock %}</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        .f-12 {
+            font-size:12px;
+        }
+        .f-16 {
+            font-size:16px;
+        }
+        .f-18 {
+            font-size:18px;
+        }
+        .f-20 {
+            font-size:20px;
+        }
+        .f-22 {
+            font-size:22px;
+        }
+        .f-24 {
+            font-size:24px;
+        }
+        .f-26 {
+            font-size:26px;
+        }
+        .f-28 {
+            font-size:28px;
+        }
+        .f-34 {
+            font-size:34px;
+        }
+        body {
+           font: 700 16px Arial,"microsoft yahei";
+        }
+        .f-bold {
+            font-weight: bold;
+        }
+
+        .btn-jd {
+            height: 46px;
+            line-height: 46px;
+            padding: 0 26px;
+            font-size: 18px;
+            font-family: "microsoft yahei";
+            background-color: #df3033;
+            color: #fff;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            outline: none;
+            border: none;
+        }
+
+        .btn-jd:nth-of-type(2) {
+            background-color: #1185f6;
+        }
+
+        .input-jd {
+            display: block;
+            width: 43px;
+            height: 42px;
+            line-height: 42px;
+            border: none;
+            border: 0;
+            text-align: center;
+        }
+
+        .jd-form-input #id_quantity {
+            width: 58px;
+            height: 44px;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            margin:0 10px;
+            text-align: center;
+            text-align-last: center;
+            color: #777777;
+            font-weight: 400;
+        }
+
+        .jd-form-input label {
+            font-size:14px;
+            color: #777;
+            font-weight: 400;
+        }
+
+        .fuck p{
+            text-indent: 20px;
+            margin: 10px 0 0;
+        }
+        .m-10 {
+            margin: 10px 0;
+        }
+        .m-b-10 {
+            margin: 0 0 10px;
+        }
+        .m-t-10 {
+            margin: 10px 0 0px;
+        }
+        .panel-info:hover {
+            background:#fff4e8;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Shop</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse navbar-left">
+          <ul class="nav navbar-nav">
+            <li {% if not category %} class="active"{% endif %}>
+                <a href="{% url "shop:product_list" %}">所有种类</a>
+            </li>
+            {% for c in categories %}
+                <li {% if category.slug == c.slug %} class="active"{% endif %}>
+                    <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                </li>
+            {% endfor %}
+          </ul>
+        </div>
+          <div class="nav navbar-nav navbar-right">
+              <div class="alert alert-dark" role="alert">
+                <ul class="navbar-nav bd-navbar-nav flex-row">
+                   {% with total_items=cart|length %}
+                        {% if cart|length%}
+                            <span class="text-muted">购物车:</span>
+                            <a href="{% url "cart:cart_detail" %}" target="_blank">
+                                <span class="text-success">共 {{ total_items }} 件商品</span>
+                                <span class="badge">${{ cart.get_total_price }}</span>
+                            </a>
+                        {% else %}
+                            <div class="text-warning">购物车为空</div>
+                        {% endif %}
+                    {% endwith %}
+                </ul>
+            </div>
+          </div>
+      </div>
+    </nav>
+    <div class="container" style="padding-top: 50px;">
+
+        {% block content %}
+        {% endblock %}
+    </div>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
