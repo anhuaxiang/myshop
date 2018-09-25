@@ -25,7 +25,8 @@ SECRET_KEY = '56ay)*tst^4_jp3a56f3c+v)&7(+e7a9+%lkdts-romcz1egp%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'anhuaxiang.cn',
+                 'www.anhuaxiang.cn', '47.106.231.122']
 
 # Application definition
 
